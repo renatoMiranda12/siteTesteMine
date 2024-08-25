@@ -1,0 +1,99 @@
+# Simple workflow for deploying static content to GitHub Pages
+name: Deploy static content to Pages
+
+on:<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+	<title>Minecraft</title>
+	<link rel="stylesheet" type="text/css" href="style.css">
+</head>
+<body>
+ <div class="topo">
+    <div>
+        Minecraft
+        <span>
+            <a href="#sinopse">O que é?</a>
+            <a href="#musica">Música</a>
+            <a href="#disponibilidade">Disponibilidade</a>
+        </span>
+    </div>
+  </div>
+
+  <img class="img-capa" src="capaMine.jpg" alt="Capa do Minecraft">
+  
+  <div id="sinopse" class="secao">
+    <h2>O que é?</h2>
+    <p>Minecraft é um jogo eletrônico lançado em 2009 que consiste em sobreviver em um mundo formado 
+      (majoritariamente) por blocos cúbicos. Steve, o personagem controlado pelo jogador, inicia o jogo em um ambiente repleto de árvores, 
+      montanhas, rios. Seu objetivo é coletar recursos (madeira, rochas, minérios, carvão, alimentos) 
+      e construir ferramentas e abrigos cada vez melhores para sobreviver e se salvar dos monstros que surgem durante a noite.<br>
+      <br>Mas não é só de sobrevivência que o jogo se trata. Minecraft é também sobre exploração e constante evolução. 
+      Com o avançar do jogo, é possível automatizar a coleta de praticamente todos os recursos e tornar cada vez menos necessárias tarefas 
+      que demandam muito tempo (como a mineração, o plantio, a colheita e a caça de monstros).</p>
+  </div>
+  <div id="musica" class="secao">
+    <h2>Música</h2>
+    <!-- audio usado para insirir um audio -->
+    <audio controls src="musicaMine.m4a">Música do Minecraft</audio>
+  </div>
+  <div id="disponibilidade" class="secao">
+    <h2>Disponibilidade</h2>
+      <img src="mojang.png" alt="Logo da MOJANG Studios">
+      <!-- figcaption usado para fazer o legenda de figuras, imagens e etc -->
+      <figcaption>Atual desenvolvedora responsável pelo Minecraft</figcaption>
+    
+    <p>Minecraft é disponível para todas as plataformas. Windows, Mac, Linux, Nintendo, Chromebook, Xbox, Amazon Fire, IOS, Playstation e Android</p>
+  </div>
+
+    <div class="informacao">
+      <p>Comprar <a href="https://www.minecraft.net/pt-br">Minecraft</a></p>
+    </div>
+    <!-- muito bom usar o address como um "rodapé para informações", mas seu principal 
+    objetivo é colocar informações do autor, empresa e etc -->
+    <address>
+      Escrito por: Renato Miranda e Renato Rocha<br>
+      Inpirado no site: <a href="https://www.minecraft.net/pt-br">Minecraft.net</a><br>
+    </address>
+
+  <div class="rodape"></div>
+</body>
+</html>
+  # Runs on pushes targeting the default branch
+  push:
+    branches: ["main"]
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+# Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Allow only one concurrent deployment, skipping runs queued between the run in-progress and latest queued.
+# However, do NOT cancel in-progress runs as we want to allow these production deployments to complete.
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+jobs:
+  # Single deploy job since we're just deploying
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          # Upload entire repository
+          path: '.'
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
